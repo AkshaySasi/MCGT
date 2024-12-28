@@ -1,0 +1,27 @@
+{% extends "admin/index.html" %}
+{% block body %}
+<form action="" method="post">
+    <table  class="table table-stripped" width="1000">
+{% if d %}
+  <tr>
+    <th scope="row">#</th>
+    <td>Name</td>
+    <td>Feedback</td>
+    <td>Date</td>
+  </tr>
+    {% for i in d %}
+  <tr>
+    <th scope="row">{{ loop.index }}</th>
+    <td>{{ i['fname'] }}</td>
+    <td>{{ i['feedback'] }}</td>
+    <td>{{ i['feedback_date'] }}</td>
+
+  </tr>
+    {% endfor %}
+    {% else %}
+       <p style="color: red; margin-left: 50%;"><marquee>NO DATA ADDED!!!!</marquee></p>
+</table>
+
+</form>
+{% endif %}
+{% endblock %}

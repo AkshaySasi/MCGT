@@ -1,0 +1,68 @@
+SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                final String ip = sh.getString("ip", "");
+                final String url = "http://" + ip + ":5000/registration";
+
+                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                // Toast.makeText(getApplicationContext(),url,Toast.LENGTH_SHORT).show();
+                StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+
+                                try {
+
+
+                                    JSONObject js = new JSONObject(response);
+                                    String status = js.getString("status");
+                                    if (status.equalsIgnoreCase("ok")) {
+                                  /*  String id = js.getString("id");
+                                    SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    SharedPreferences.Editor ed = sh.edit();
+                                    ed.putString("uid", id);
+                                    ed.commit();*/
+
+                                        Intent intp = new Intent(getApplicationContext(), Login.class);
+                                        startActivity(intp);
+                                        Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Registration Unsuccessful", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } catch (Exception ex) {
+
+                                }
+
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // error
+                                Toast.makeText(getApplicationContext(), "eeeee" + error.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                ) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        SharedPreferences sh = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        Map<String, String> params = new HashMap<String, String>();
+
+                        params.put("fname", tname);
+                        params.put("gender", gen);
+                        params.put("dob", date);
+                        params.put("emailid", mail);
+                        params.put("ph", phone);
+                        params.put("photo", attach);
+                        params.put("password", cp);
+
+
+                        return params;
+                    }
+
+                };
+                postRequest.setRetryPolicy(new DefaultRetryPolicy(60000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+                requestQueue.add(postRequest);
+

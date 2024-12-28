@@ -1,0 +1,35 @@
+{% extends "admin/index.html" %}
+{% block body %}
+{% if d %}
+<form action="" method="post">
+    <table  class="table table-stripped" width="1000">
+
+  <tr>
+    <th>#</th>
+    <th>Name&nbsp;</th>
+    <th>Gender&nbsp;</th>
+    <th>DOB&nbsp;</th>
+    <th>&nbsp;Email</th>
+    <th>&nbsp;Phone</th>
+  </tr>
+
+    {% for i in d %}
+  <tr>
+    <th>{{ loop.index }}</th>
+  <th><img src="{{ i.photo }}" width="100" height="100"><br>{{ i.fname }}</th>
+  <th>{{ i.gender }}</th>
+  <th>{{ i.dob }}</th>
+  <th>{{ i.emailid }}</th>
+  <th>{{ i.phone }}</th>
+ 
+    </tr>
+{% endfor %}
+    </table>
+
+</form>
+    {% else %}
+    <p style="color: red; margin-left: 50%;"><marquee>NO DATA ADDED!!!!</marquee></p>
+
+{% endif %}
+
+{% endblock %}

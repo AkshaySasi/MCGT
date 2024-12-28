@@ -1,0 +1,34 @@
+{% extends "admin/index.html" %}
+{% block body %}
+<form action="" method="post">
+    <table  class="table table-stripped" width="1000">
+{% if d %}
+  <tr>
+    <th scope="row">#</th>
+    <td>Name</td>
+    <td>Complaint</td>
+    <td>Date</td>
+    <td>&nbsp;Reply</td>
+    </tr>
+
+      {% for i in d %}
+  <tr>
+    <th scope="row">{{ loop.index }}&nbsp;</th>
+    <td>{{ i['fname'] }}&nbsp;</td>
+    <td>&nbsp;{{ i['complaint'] }}</td>
+    <td>{{ i['complaint_date'] }}&nbsp;</td>
+
+      {% if i['reply']=='pending' %}
+    <td><a href="/reply_complaint/{{ i['complaint_id'] }}">Reply</a></td>
+          {% else %}
+          <td>{{ i['reply'] }}</td>
+  {% endif %}
+
+    </tr>
+      {% endfor %}
+</table>
+{% else %}
+        <p style="color: red; margin-left: 50%;"><marquee>NO DATA ADDED!!!!</marquee></p>
+</form>
+{% endif %}
+{% endblock %}
