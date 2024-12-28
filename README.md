@@ -1,2 +1,2 @@
-# MCGT
-Morse Code Gesture Translator
+# PryMe
+Privacy Made Perfect
